@@ -12,10 +12,33 @@ foreach (string line in lines)
 }
 
 int similarityScore = 0;
-for (int cnt = 0; cnt < leftList.Count; cnt++)
+
+//O(n^2)
+//for (int cnt = 0; cnt < leftList.Count; cnt++)
+//{
+//    var leftElement = leftList[cnt];
+//    var rightOccurences = rightList.Count(rightElement => (leftElement == rightElement));
+//    similarityScore += (leftElement * rightOccurences);
+//}
+
+//O(n)
+Dictionary<int, int> map = [];
+foreach (var rightElem in rightList)
 {
-    var leftElement = leftList[cnt];
-    var rightOccurences = rightList.Count(rightElement => (leftElement == rightElement));
-    similarityScore += (leftElement * rightOccurences);
+    if(map.ContainsKey(rightElem))
+    {
+        map[rightElem]++;
+    }
+    else
+    {
+        map[rightElem] = 1;
+    }
 }
+
+foreach(var leftElem in leftList)
+{
+    var occurences = map.ContainsKey(leftElem) ? map[leftElem] : 0;
+    similarityScore += (leftElem * occurences);
+}
+
 Console.WriteLine($"Simularity score is: {similarityScore}");
