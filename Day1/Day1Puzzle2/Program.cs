@@ -11,12 +11,14 @@ foreach (string line in lines)
     rightList.Add(rightElement);
 }
 
-var leftListedSorted = leftList.Order().ToList();
-var rightListedSorted = rightList.Order().ToList();
-
-int totalDistance = 0;
-for (int cnt = 0; cnt < leftListedSorted.Count(); cnt++)
+int similarityScore = 0;
+for (int cnt = 0; cnt < leftList.Count; cnt++)
 {
-    totalDistance += Math.Abs(leftListedSorted[cnt] - rightListedSorted[cnt]);
+    var leftElement = leftList[cnt];
+    var rightOccurence = rightList
+        .Where(list => list == leftElement)
+        .ToList()
+        .Count();
+    similarityScore += (leftElement * rightOccurence);
 }
-Console.WriteLine($"Total distance is: {totalDistance}");
+Console.WriteLine($"Simularity score is: {similarityScore}");
