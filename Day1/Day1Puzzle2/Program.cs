@@ -25,9 +25,9 @@ int similarityScore = 0;
 Dictionary<int, int> map = [];
 foreach (var rightElem in rightList)
 {
-    if(map.ContainsKey(rightElem))
+    if(map.TryGetValue(rightElem, out int value))
     {
-        map[rightElem]++;
+        map[rightElem] = ++value;
     }
     else
     {
@@ -37,7 +37,7 @@ foreach (var rightElem in rightList)
 
 foreach(var leftElem in leftList)
 {
-    var occurences = map.ContainsKey(leftElem) ? map[leftElem] : 0;
+    var occurences = map.TryGetValue(leftElem, out int value) ? value : 0;
     similarityScore += (leftElem * occurences);
 }
 
