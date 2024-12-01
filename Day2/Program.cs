@@ -5,10 +5,12 @@ Part2(lines);
 
 void Part1(string[] lines)
 {
-    Console.WriteLine("Part 1");
+    var answer = 0;
+    Console.WriteLine($"p1: {answer}");
 }
 
 void Part2(string[] lines)
 {
-    Console.WriteLine("Part 2");
+    var answer = 0;
+    Console.WriteLine($"p2: {answer}");
 }
