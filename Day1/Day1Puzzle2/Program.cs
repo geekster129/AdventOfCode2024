@@ -15,10 +15,7 @@ int similarityScore = 0;
 for (int cnt = 0; cnt < leftList.Count; cnt++)
 {
     var leftElement = leftList[cnt];
-    var rightOccurence = rightList
-        .Where(list => list == leftElement)
-        .ToList()
-        .Count();
-    similarityScore += (leftElement * rightOccurence);
+    var rightOccurences = rightList.Count(rightElement => (leftElement == rightElement));
+    similarityScore += (leftElement * rightOccurences);
 }
 Console.WriteLine($"Simularity score is: {similarityScore}");
