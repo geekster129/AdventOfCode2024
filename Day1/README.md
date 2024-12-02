@@ -1,4 +1,4 @@
-# Day 1 Puzzle
+# Day 1 : Historian Hysteria
 
 ## Part One
 
