@@ -1,4 +1,4 @@
-﻿string[] lines = File.ReadAllLines("/workspace/AdventOfCode2024/Day2/puzzle2.txt");
+﻿string[] lines = File.ReadAllLines("/workspaces/AdventOfCode2024/Day2/puzzle2.txt");
 
 Part1(lines);
 Part2(lines);
@@ -6,29 +6,15 @@ Part2(lines);
 bool isSafe(string[] levels)
 {
     Dictionary<string, int> diffMap = [];
-
     List<int> threshold = [];
-    for (int j = 0; j < levels.ToList().Count; j++)
+    for (int j = 1; j < levels.ToList().Count; j++)
     {
-        if (j > 0)
-        {
-            var diff = Convert.ToInt32(levels[j]) - Convert.ToInt32(levels[j - 1]);
-            if (diff > 0)
-            {
-                diffMap["+"] = 1;
-            }
-            else
-            {
-                diffMap["-"] = 1;
-            }
-
-            threshold.Add(Math.Abs(diff));
-
-        }
+        var diff = Convert.ToInt32(levels[j]) - Convert.ToInt32(levels[j - 1]);
+        var symbol = diff > 0 ? "+" : "-";
+        diffMap[symbol] = 1;
+        threshold.Add(Math.Abs(diff));
     }
-
-    var safeThreshold = !threshold.Any(t => (t < 1 || t > 3));
-    return safeThreshold && diffMap.Count == 1;
+    return !threshold.Any(t => (t < 1 || t > 3)) && diffMap.Count == 1;
 }
 
 void Part1(string[] lines)
