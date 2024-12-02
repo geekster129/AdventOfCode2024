@@ -7,7 +7,7 @@ bool isSafe(string[] levels)
 {
     Dictionary<string, int> diffMap = [];
     List<int> threshold = [];
-    for (int j = 1; j < levels.ToList().Count; j++)
+    for (int j = 1; j < levels.Length; j++)
     {
         var diff = Convert.ToInt32(levels[j]) - Convert.ToInt32(levels[j - 1]);
         var symbol = diff > 0 ? "+" : "-";
@@ -20,7 +20,7 @@ bool isSafe(string[] levels)
 void Part1(string[] lines)
 {
     var safeCnt = 0;
-    for(int line=0;line<lines.ToList().Count;line++) 
+    for(int line=0;line<lines.Length;line++) 
     {
         var levels = lines[line].Split();
         if (isSafe(levels)) safeCnt++;
@@ -31,13 +31,10 @@ void Part1(string[] lines)
 void Part2(string[] lines)
 {
     var safeCnt = 0;
-    for (int line = 0; line < lines.ToList().Count; line++)
+    for (int line = 0; line < lines.Length; line++)
     {
         var levels = lines[line].Split();
-        if (isSafe(levels))
-        {
-            safeCnt++;
-        }
+        if (isSafe(levels)) safeCnt++;
         else
         {
             for (int k = 0; k < levels.Length; k++)
