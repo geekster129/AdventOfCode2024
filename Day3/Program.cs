@@ -11,13 +11,12 @@ int Part1(string input) {
     var pattern = @"mul\((\d+),(\d+)\)";
     try 
     {
-         foreach (Match match in Regex.Matches(input, pattern,
-                                               RegexOptions.None,
-                                               TimeSpan.FromSeconds(1))) {
+         foreach (Match match in Regex.Matches(input, pattern, RegexOptions.None,TimeSpan.FromSeconds(1))) 
+         {
             var val1 = Convert.ToInt32(match.Groups[1].Value);
             var val2 = Convert.ToInt32(match.Groups[2].Value);
             sum += val1*val2;
-                                               }
+         }
     }
     catch (RegexMatchTimeoutException) {
 
