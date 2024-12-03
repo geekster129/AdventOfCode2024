@@ -1,4 +1,4 @@
-﻿string[] lines = File.ReadAllLines("/workspaces/AdventOfCode2024/Day2/puzzle2.txt");
+﻿string[] lines = File.ReadAllLines("puzzle2.txt");
 
 Part1(lines);
 Part2(lines);
