@@ -1,24 +1,35 @@
-﻿string[] lines = File.ReadAllLines("/workspaces/AdventOfCode2024/Day3/puzzle3.txt");
+﻿using System.Text.RegularExpressions;
+using System.Text;
 
-Part1(lines);
-Part2(lines);
+string input = File.ReadAllText("puzzle3.txt");
 
-void Part1(string[] lines)
-{
-    var p1 = 0;
-    foreach(var line in lines) 
-    {
-        var elems = line.Split();
+Console.WriteLine($"p1: {Part1(input)}");
+Console.WriteLine($"p2: {Part2(input)}");
+
+int Part1(string input) {
+    int sum = 0;
+    var pattern = @"(mul[(]\d+,\d+[)])";
+    try {
+         foreach (Match match in Regex.Matches(input, pattern,
+                                               RegexOptions.None,
+                                               TimeSpan.FromSeconds(1))) {                                                
+                                                    var val1 = Convert.ToInt32(match.Value.Split(",")[0].Split("mul(")[1]);
+                                                    var val2 = Convert.ToInt32(match.Value.Split(",")[1].Split(")")[0]);
+                                                    sum += val1*val2;
+                                               }
     }
-    Console.WriteLine($"p1: {p1}");
+    catch (RegexMatchTimeoutException) {
+
+    }    
+    return sum;
 }
 
-void Part2(string[] lines)
+int Part2(string input)
 {
-    var p2 = 0;
-    foreach (var line in lines)
+    var enabledString = new StringBuilder();
+    foreach (var instruction in input.Split("do()"))
     {
-        var elems = line.Split();
+        enabledString.Append(instruction.Split("don\'t()")[0]);
     }
-    Console.WriteLine($"p2: {p2}");
+    return Part1(enabledString.ToString());
 }
