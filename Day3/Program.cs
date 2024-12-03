@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Text;
 
-string input = File.ReadAllText("d:\\AdventOfCode2024\\Day3\\puzzle3.txt");
+string input = File.ReadAllText("puzzle3.txt");
 
 Console.WriteLine($"p1: {Part1(input)}");
 Console.WriteLine($"p2: {Part2(input)}");
