@@ -22,8 +22,9 @@ char Get(char[][] grid, int row, int col)
     return grid[row][col];
 }
 
-int Scan1(char[][] grid)
+int Part1(string[] input)
 {
+    var grid = GetGrid(input);
     var occurence = 0;
     for (int row = 0; row < grid.Length; row++)
     {
@@ -66,8 +67,9 @@ int Scan1(char[][] grid)
     return occurence;
 }
 
-int Scan2(char[][] grid)
+int Part2(string[] input)
 {
+    var grid = GetGrid(input);
     var occurence = 0;
     for (int row = 0; row < grid.Length; row++)
     {
@@ -97,19 +99,7 @@ int Scan2(char[][] grid)
     return occurence;
 }
 
-int Part1(string[] input)
-{
-    List<char[]> grid = [];
-    foreach(var line in input) 
-    {
-        char[] chars = line.ToCharArray();
-        grid.Add(chars);
-    }
-    var newGrid = grid.ToArray();
-    return Scan1(newGrid);
-}
-
-int Part2(string[] input)
+char[][] GetGrid(string[] input)
 {
     List<char[]> grid = [];
     foreach (var line in input)
@@ -117,6 +107,5 @@ int Part2(string[] input)
         char[] chars = line.ToCharArray();
         grid.Add(chars);
     }
-    var newGrid = grid.ToArray();
-    return Scan2(newGrid);
+    return grid.ToArray();
 }
