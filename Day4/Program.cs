@@ -6,30 +6,30 @@ string[] input = File.ReadAllLines("puzzle4.txt");
 Console.WriteLine($"p1: {Part1(input)}");
 Console.WriteLine($"p2: {Part2(input)}");
 
-char Get(char[][] grid, int x, int y)
+char Get(char[][] grid, int row, int col)
 {
-    if (x < 0 || x > grid.Length-1)
+    if (row < 0 || row > grid.Length-1)
     {
         return '\0';
     }
     else
     {
-        if (y < 0 || y > grid[x].Length-1)
+        if (col < 0 || col > grid[row].Length-1)
         {
             return '\0';
         }
     }
-    return grid[x][y];
+    return grid[row][col];
 }
 
-int Scan(char[][] grid)
+int Scan1(char[][] grid)
 {
     var occurence = 0;
-    for (int posX = 0; posX < grid.Length; posX++)
+    for (int row = 0; row < grid.Length; row++)
     {
-        for (int posY = 0; posY < grid[posX].Length; posY++)
+        for (int col = 0; col < grid[row].Length; col++)
         {
-            if (grid[posX][posY] == 'X')
+            if (grid[row][col] == 'X')
             {
                 var east = new StringBuilder();
                 var west = new StringBuilder();
@@ -41,24 +41,15 @@ int Scan(char[][] grid)
                 var sw = new StringBuilder();
                 for (var i = 0; i < 4; i++)
                 {
-                    east.Append(Get(grid, posX + i, posY));
-                    west.Append(Get(grid, posX - i, posY));
-                    north.Append(Get(grid, posX, posY - i));
-                    south.Append(Get(grid, posX, posY + i));
-                    ne.Append(Get(grid, posX + i, posY - i));
-                    nw.Append(Get(grid, posX - i, posY - i));
-                    se.Append(Get(grid, posX + i, posY + i));
-                    sw.Append(Get(grid, posX - i, posY + i));
+                    east.Append(Get(grid, row, col + i));
+                    west.Append(Get(grid, row, col - i));
+                    north.Append(Get(grid, row - i, col));
+                    south.Append(Get(grid, row + i, col));
+                    ne.Append(Get(grid, row - i, col + i));
+                    nw.Append(Get(grid, row - i, col - i));
+                    se.Append(Get(grid, row + i, col + i));
+                    sw.Append(Get(grid, row + i, col - i));
                 }
-                Console.WriteLine($"Left: {east}");
-                Console.WriteLine($"Right: {west}");
-                Console.WriteLine($"Down: {south}");
-                Console.WriteLine($"Up: {north}");
-                Console.WriteLine($"Up-Right: {ne}");
-                Console.WriteLine($"Up-Left: {nw}");
-                Console.WriteLine($"Down-Right: {se}");
-                Console.WriteLine($"Down-Left: {sw}");
-                Console.WriteLine("============");
 
                 string xmas = "XMAS";
                 if (east.ToString() == xmas) occurence++;
@@ -75,6 +66,37 @@ int Scan(char[][] grid)
     return occurence;
 }
 
+int Scan2(char[][] grid)
+{
+    var occurence = 0;
+    for (int row = 0; row < grid.Length; row++)
+    {
+        for (int col = 0; col < grid[row].Length; col++)
+        {
+            if (grid[row][col] == 'A' && row > 0)
+            {
+                var ne = new StringBuilder();
+                var nw = new StringBuilder();
+                var se = new StringBuilder();
+                var sw = new StringBuilder();
+                for (var i = 0; i < 2; i++)
+                {
+                    ne.Append(Get(grid, row - i, col + i));
+                    nw.Append(Get(grid, row - i, col - i));
+                    se.Append(Get(grid, row + i, col + i));
+                    sw.Append(Get(grid, row + i, col - i));
+                }
+                
+                if (ne.ToString() == "AS" && nw.ToString() == "AM" && se.ToString() == "AS" && sw.ToString() == "AM") occurence++;
+                if (ne.ToString() == "AM" && nw.ToString() == "AS" && se.ToString() == "AM" && sw.ToString() == "AS") occurence++;
+                if (ne.ToString() == "AS" && nw.ToString() == "AS" && se.ToString() == "AM" && sw.ToString() == "AM") occurence++;
+                if (ne.ToString() == "AM" && nw.ToString() == "AM" && se.ToString() == "AS" && sw.ToString() == "AS") occurence++;
+            }
+        }
+    }
+    return occurence;
+}
+
 int Part1(string[] input)
 {
     List<char[]> grid = [];
@@ -84,10 +106,17 @@ int Part1(string[] input)
         grid.Add(chars);
     }
     var newGrid = grid.ToArray();
-    return Scan(newGrid);
+    return Scan1(newGrid);
 }
 
 int Part2(string[] input)
 {
-   return 0;
+    List<char[]> grid = [];
+    foreach (var line in input)
+    {
+        char[] chars = line.ToCharArray();
+        grid.Add(chars);
+    }
+    var newGrid = grid.ToArray();
+    return Scan2(newGrid);
 }
